@@ -1,0 +1,30 @@
+To install Tailwind css in any project from react with Vite
+    1. npm create vite@latest <folder-name> -- --template react
+    2. cd <folder-name>
+    3. npm install
+    4. npm install -D tailwindcss@3 postcss autoprefixer
+    5. npx tailwindcss init -p
+    6. Open tailwind.config.js
+        code
+        Change all code to below oonces
+            /** @type {import('tailwindcss').Config} */
+                export default {
+                content: [
+                    "./index.html",
+                    "./src/**/*.{js,ts,jsx,tsx}",
+                    ],
+                    theme: {
+                        extend: {},
+                    },
+                    plugins: [],
+                }
+    7. Open src/index.css
+        code
+        Change all code to below oonces
+            @tailwind base;
+            @tailwind components;
+            @tailwind utilities;
+
+
+
+
