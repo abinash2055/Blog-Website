@@ -27,6 +27,6 @@ To install Tailwind css in any project from react with Vite
 
 
 
-Time: 1:17:26
+Time: 1:23:12
 
 
