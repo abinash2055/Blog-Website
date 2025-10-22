@@ -30,3 +30,24 @@ To install Tailwind css in any project from react with Vite
 Time: 1:23:12
 
 
+name : User 1
+email : user1@user.com
+password : 12345678
+confirm password : 12345678
+
+{
+    name: 'User 1', 
+    email: 'user1@user.com', 
+    password: '12345678', 
+    confirmPassword: '12345678'
+}
+
+{
+    name: 'User 2', 
+    email: 'user2@user.com', 
+    password: '87654321', 
+    confirmPassword: '87654321'
+}
+
+
+
