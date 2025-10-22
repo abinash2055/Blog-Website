@@ -1,16 +1,13 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from "react";
+import { Button } from "./components/ui/button";
 
-function App() {
+const App = () => {
   return (
-    <>
-      <h1 className="text-4xl font-bold text-orange-600">
-        Tailwind CSS + React + Vite ✅
-      </h1>
-    </>
+    <div>
+      App
+      <Button>ShadCN Button </Button>
+    </div>
   );
-}
+};
 
 export default App;
