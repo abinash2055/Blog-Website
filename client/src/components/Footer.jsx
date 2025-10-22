@@ -10,11 +10,12 @@ const Footer = () => {
       >
         Personal Signature.
       </a>
+      All rights reserved. |
       <a
         href="https://3-d-portfolio-theta-nine.vercel.app/"
         className="font-bold"
       >
-        All rights reserved.
+        | Personal Website
       </a>
     </div>
   );
