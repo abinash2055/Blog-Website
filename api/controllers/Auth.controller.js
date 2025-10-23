@@ -69,7 +69,7 @@ export const Login = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      newUser,
+      user: newUser,
       message: "User logged in successfully.",
     });
   } catch (error) {
@@ -118,7 +118,7 @@ export const GoogleLogin = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      newUser,
+      user: newUser,
       message: "User logged in successfully.",
     });
   } catch (error) {
