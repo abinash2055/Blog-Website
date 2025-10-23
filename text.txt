@@ -26,8 +26,10 @@ To install Tailwind css in any project from react with Vite
             @tailwind utilities;
 
 
+Firebase project name : mern-blog
+Add Firebase to your web app name : Personal Signature Blog
 
-Time: 1:23:12
+Time: 2 : 44 : 03
 
 
 name : User 1
@@ -49,5 +51,9 @@ confirm password : 12345678
     confirmPassword: '87654321'
 }
 
-
-
+{
+    Google Login
+    name: 'Abinash  Nath Pandey ', 
+    email: 'pabinashnath@gmail.com', 
+    password: 
+    confirmPassword:
