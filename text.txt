@@ -29,7 +29,7 @@ To install Tailwind css in any project from react with Vite
 Firebase project name : mern-blog
 Add Firebase to your web app name : Personal Signature Blog
 
-Time: 2 : 56 : 55
+Time: 3 : 17 : 20
 
 
 name : User 1

@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export const showToast = (type, message) => {
   const config = {
     position: "top-right",
