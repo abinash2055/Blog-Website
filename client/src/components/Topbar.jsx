@@ -15,7 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import usericon from "@/assets/images/user.png";
+// import usericon from "@/assets/images/user.png";
+import usericon from ".././assets/images/user.png";
 import { FaRegUser } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
