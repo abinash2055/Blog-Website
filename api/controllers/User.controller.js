@@ -6,11 +6,11 @@ import cloudinary from "../config/cloudinary.js";
 export const getUser = async (req, res, next) => {
   try {
     const { userid } = req.params;
-    const user = await User.findOne({ _id: userid }).lean().exex();
-
+    const user = await User.findOne({ _id: userid }).lean().exec();
     if (!user) {
-      next(handleError(404, "User not Found."));
+      return next(handleError(404, "User not Found."));
     }
+
     res.status(200).json({
       success: true,
       message: "User data Found.",
@@ -28,7 +28,7 @@ export const updateUser = async (req, res, next) => {
 
     const user = await User.findById(userid);
     user.name = data.name;
-    user.email.data.email;
+    user.email = data.email;
     user.bio = data.bio;
 
     if (data.password && data.password >= 8) {

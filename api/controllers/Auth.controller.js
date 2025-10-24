@@ -80,10 +80,11 @@ export const Login = async (req, res, next) => {
 export const GoogleLogin = async (req, res, next) => {
   try {
     const { name, email, avatar } = req.body;
-    let user;
-    user = await User.findOne({ email });
+
+    let user = await User.findOne({ email });
+
     if (!user) {
-      // create new user
+      // Create new user
       const password = Math.random().toString();
       const hashedPassword = bcryptjs.hashSync(password);
       const newUser = new User({
@@ -92,8 +93,11 @@ export const GoogleLogin = async (req, res, next) => {
         password: hashedPassword,
         avatar,
       });
-
       user = await newUser.save();
+    } else if (avatar && user.avatar !== avatar) {
+      // Update avatar for existing user
+      user.avatar = avatar;
+      await user.save();
     }
 
     const token = jwt.sign(
@@ -125,8 +129,6 @@ export const GoogleLogin = async (req, res, next) => {
     next(handleError(500, error.message));
   }
 };
-
-
 
 export const Logout = async (req, res, next) => {
   try {

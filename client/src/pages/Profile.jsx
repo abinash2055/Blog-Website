@@ -28,6 +28,8 @@ const Profile = () => {
   const [filePreview, setFilePreview] = useState();
   const [file, setFile] = useState();
 
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user);
 
   const {
@@ -43,8 +45,6 @@ const Profile = () => {
   );
 
   // console.log(userData);
-
-  const dispatch = useDispatch();
 
   const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 character long."),
@@ -72,6 +72,13 @@ const Profile = () => {
     }
   }, [userData]);
 
+  const handlFileSelection = (files) => {
+    const file = files[0];
+    const preview = URL.createObjectURL(file);
+    setFile(file);
+    setFilePreview(preview);
+  };
+
   async function onSubmit(values) {
     try {
       const formData = new FormData();
@@ -97,13 +104,6 @@ const Profile = () => {
       showToast("error", error.message);
     }
   }
-
-  const handlFileSelection = (files) => {
-    const file = files[0];
-    const preview = URL.createObjectURL(file);
-    setFile(file);
-    setFilePreview(preview);
-  };
 
   if (loading) return <Loading />;
 
