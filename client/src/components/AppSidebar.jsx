@@ -17,6 +17,7 @@ import { GrBlog } from "react-icons/gr";
 import { FaRegComments } from "react-icons/fa";
 import { LuUsers } from "react-icons/lu";
 import { GoDot } from "react-icons/go";
+import { RouteCategoryDetails } from "@/helpers/RouteName";
 
 const AppSidebar = () => {
   return (
@@ -36,7 +37,7 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <BiCategoryAlt />
-                <Link to="">Categories</Link>
+                <Link to={RouteCategoryDetails}>Categories</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
