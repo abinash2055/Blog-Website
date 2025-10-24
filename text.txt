@@ -33,7 +33,7 @@ Frontend: npm run dev
 Backend : npm run dev
 
 
-Time: 3 : 53 : 58
+Time: 4 : 11 : 32
 
 
 name : User 1

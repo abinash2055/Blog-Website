@@ -126,6 +126,8 @@ export const GoogleLogin = async (req, res, next) => {
   }
 };
 
+
+
 export const Logout = async (req, res, next) => {
   try {
     res.clearCookie("access_token", {

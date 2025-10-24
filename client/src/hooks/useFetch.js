@@ -28,3 +28,4 @@ export const useFetch = (url, options = {}, dependencies = []) => {
 
   return { data, loading, error };
 };
+
