@@ -26,7 +26,6 @@ import {
 import { useFetch } from "@/hooks/useFetch";
 import Dropzone from "react-dropzone";
 import Editor from "@/components/Editor";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { RouteBlog } from "@/helpers/RouteName";
 import { decode } from "entities";
@@ -39,7 +38,7 @@ const EditBlog = () => {
   const [filePreview, setFilePreview] = useState();
   const [file, setFile] = useState();
 
-  if (!blogid) return <p>Blog ID is missing!</p>; // Safety check
+  if (!blogid) return <p>Blog ID is missing!</p>;
 
   // Fetch categories
   const { data: categoryData } = useFetch(
@@ -55,10 +54,12 @@ const EditBlog = () => {
   );
 
   const formSchema = z.object({
-    category: z.string().min(3),
-    title: z.string().min(3),
-    slug: z.string().min(3),
-    blogContent: z.string().min(3),
+    category: z.string().min(3, "Category must be at least 3 characters long"),
+    title: z.string().min(3, "Title must be at least 3 characters long"),
+    slug: z.string().min(3, "Slug must be at least 3 characters long"),
+    blogContent: z
+      .string()
+      .min(3, "Blog content must be at least 3 characters long"),
   });
 
   const form = useForm({
@@ -81,19 +82,20 @@ const EditBlog = () => {
       form.setValue("slug", blog.slug);
       form.setValue("blogContent", decode(blog.blogContent));
     }
-  }, [blogData]);
-
-  const handleEditorData = (event, editor) => {
-    const data = editor.getData();
-    form.setValue("blogContent", data);
-  };
+  }, [blogData]); // Added dependency array
 
   const blogTitle = form.watch("title");
+
+  // Auto-generate slug from title
   useEffect(() => {
     if (blogTitle) {
       form.setValue("slug", slugify(blogTitle, { lower: true }));
     }
   }, [blogTitle]);
+
+  const handleEditorData = (event, editor) => {
+    form.setValue("blogContent", editor.getData());
+  };
 
   const handleFileSelection = (files) => {
     const selectedFile = files[0];
@@ -106,7 +108,7 @@ const EditBlog = () => {
       const formData = new FormData();
       if (file) formData.append("file", file);
       formData.append("data", JSON.stringify(values));
-      formData.append("params[blogid]", blogid); // Send blogid to backend
+      formData.append("params[blogid]", blogid); // Send blogid for backend
 
       const response = await fetch(
         `${getEnv("VITE_API_BASE_URL")}/blog/update/${blogid}`,
@@ -121,7 +123,7 @@ const EditBlog = () => {
       if (!response.ok) return showToast("error", data.message);
 
       showToast("success", data.message);
-      navigate(RouteBlog); // Redirect after success
+      navigate(RouteBlog);
     } catch (error) {
       showToast("error", error.message);
     }
