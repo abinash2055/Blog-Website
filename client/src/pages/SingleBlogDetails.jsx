@@ -1,9 +1,13 @@
 import Comment from "@/components/Comment";
+import CommentCount from "@/components/CommentCount";
+import CommentList from "@/components/CommentList";
+import LikeCount from "@/components/LikeCount";
 import Loading from "@/components/Loading";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getEnv } from "@/helpers/getEnv";
 import { useFetch } from "@/hooks/useFetch";
 import { decode } from "entities";
+import moment from "moment";
 import React from "react";
 import { useParams } from "react-router-dom";
 
@@ -34,9 +38,20 @@ const SingleBlogDetails = () => {
                 <Avatar>
                   <AvatarImage src={data.blog.author.avatar} alt="avatar" />
                 </Avatar>
-                <span>{data.blog.author.name}</span>
+                <div>
+                  <p className="font-bold">{data.blog.author.name}</p>
+                  <p>
+                    Date: {moment(data.blog.createdAt).format("DD-MM-YYYY")}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center gap-5">
+                <LikeCount props={{ blogid: data.blog._id }} />
+                <CommentCount props={{ blogid: data.blog._id }} />
               </div>
             </div>
+
             {/* Featured Image  */}
             <div className="my-5">
               <img
@@ -45,6 +60,7 @@ const SingleBlogDetails = () => {
                 className="rounded"
               />
             </div>
+
             {/* Blog Content  */}
             <div
               dangerouslySetInnerHTML={{
@@ -54,7 +70,7 @@ const SingleBlogDetails = () => {
 
             {/* Comments */}
             <div className="border-t mt-5 pt-5">
-              <Comment />
+              <Comment props={{ blogid: data.blog._id }} />
             </div>
           </div>
         </>

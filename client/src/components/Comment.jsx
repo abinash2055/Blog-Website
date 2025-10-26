@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaComments } from "react-icons/fa6";
 import {
   Form,
@@ -15,8 +15,15 @@ import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "./ui/textarea";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { RouteSignIn } from "@/helpers/RouteName";
+import CommentList from "./CommentList";
 
-const Comment = () => {
+const Comment = ({ props }) => {
+  const user = useSelector((state) => state.user);
+  const [newComment, setNewComment] = useState();
+
   const formSchema = z.object({
     comment: z.string().min(3, "Comment must be at least 3 characters long"),
   });
@@ -30,20 +37,26 @@ const Comment = () => {
 
   async function onSubmit(values) {
     try {
+      const newValuws = {
+        ...values,
+        blogid: props.blogid,
+        author: user.user._id,
+      };
       const response = await fetch(
-        `${getEnv("VITE_API_BASE_URL")}/blog/comment`,
+        `${getEnv("VITE_API_BASE_URL")}/comment/add`,
         {
           method: "post",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(newValuws),
         }
       );
       const data = await response.json();
       if (!response.ok) {
         return showToast("error", data.message);
       }
+      setNewComment(data.comment);
       form.reset();
       showToast("success", data.message);
     } catch (error) {
@@ -56,29 +69,40 @@ const Comment = () => {
       <h4 className="flex items-center gap-2 text-2xl font-bold">
         <FaComments className="text-violet-500" /> Comment
       </h4>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          {/* For name  */}
-          <div className="mb-3">
-            <FormField
-              control={form.control}
-              name="comment"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Comment</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Type your comment..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
 
-          {/* Button  */}
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
+      {user && user.isLoggedIn ? (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            {/* For name  */}
+            <div className="mb-3">
+              <FormField
+                control={form.control}
+                name="comment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Comment</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Type your comment..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Button  */}
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
+      ) : (
+        <Button asChild>
+          <Link to={RouteSignIn}>Sign In </Link>
+        </Button>
+      )}
+
+      <div className="mt-5">
+        <CommentList props={{ blogid: props.blogid, newComment }} />
+      </div>
     </div>
   );
 };

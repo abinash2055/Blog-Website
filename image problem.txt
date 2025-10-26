@@ -1,0 +1,16 @@
+
+........  Problem  ...............
+
+
+
+A. Login garda Google bata, Google Image profile Avatar ma aayena.
+
+B. Profile ma ni Images aayena.
+
+C. Profile ma upload gara avatar ni aauxa.
+
+D. Email bata sign Up garda, User Icon ni aayena assets bata.
+
+E. Blog ma avatar ni aayena.
+
+F. Comment ma ni avatar aayena.
