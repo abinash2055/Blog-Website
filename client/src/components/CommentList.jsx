@@ -36,7 +36,7 @@ const CommentList = ({ props }) => {
               <AvatarImage src={user?.user?.avatar || usericon} alt="Logo" />
             </Avatar>
             <div>
-              <p className="font-bold">{user?.user.name}</p>
+              <p className="font-bold">{user?.user?.name}</p>
               <p>{moment(props.newComment?.createdAt).format("DD-MM-YYYY")}</p>
               <div className="pt-3">{props.newComment?.comment}</div>
             </div>
@@ -50,12 +50,12 @@ const CommentList = ({ props }) => {
               <div key={comment._id} className="flex gap-2 mb-3">
                 <Avatar>
                   <AvatarImage
-                    src={comment?.author.avatar || usericon}
+                    src={comment?.user.avatar || usericon}
                     alt="Logo"
                   />
                 </Avatar>
                 <div>
-                  <p className="font-bold">{comment?.author.name}</p>
+                  <p className="font-bold">{comment?.user.name}</p>
                   <p>{moment(comment?.createdAt).format("DD-MM-YYYY")}</p>
                   <div className="pt-3">{comment?.comment}</div>
                 </div>
