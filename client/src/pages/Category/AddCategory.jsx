@@ -85,7 +85,7 @@ const AddCategory = () => {
                   )}
                 />
               </div>
-              {/* For email  */}
+              {/* For slug  */}
               <div className="mb-3">
                 <FormField
                   control={form.control}

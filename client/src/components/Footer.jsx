@@ -8,9 +8,9 @@ const Footer = () => {
         href="https://www.youtube.com/channel/UCRsODlZoJvC2BmMLmDM7k_Q"
         className="font-bold"
       >
-        Personal Signature.
+        Personal Signature. |
       </a>
-      All rights reserved. |
+      | All rights reserved.. |
       <a
         href="https://3-d-portfolio-theta-nine.vercel.app/"
         className="font-bold"
