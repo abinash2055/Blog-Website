@@ -78,7 +78,7 @@ const Topbar = () => {
               {/* Avatar  */}
               <Avatar>
                 <AvatarImage src={user.user?.avatar || usericon} />
-                <AvatarFallback>CN</AvatarFallback>
+
               </Avatar>
             </DropdownMenuTrigger>
 
