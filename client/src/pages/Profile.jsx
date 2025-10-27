@@ -23,6 +23,7 @@ import Loading from "@/components/Loading";
 import { IoCameraOutline } from "react-icons/io5";
 import Dropzone from "react-dropzone";
 import { setUser } from "@/redux/user/user.slice";
+import { FaRegArrowAltCircleUp } from "react-icons/fa";
 
 const Profile = () => {
   const [filePreview, setFilePreview] = useState();
@@ -43,8 +44,6 @@ const Profile = () => {
       credentials: "include",
     }[user?.user?._id]
   );
-
-  // console.log(userData);
 
   const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 character long."),
@@ -110,14 +109,15 @@ const Profile = () => {
   return (
     <Card className="max-w-screen-md mx-auto">
       <CardContent>
-        <div className="flex justify-center items-center mt-10">
+        <div className="flex justify-center items-center mt-10 ">
           <Dropzone
             onDrop={(acceptedFiles) => handlFileSelection(acceptedFiles)}
           >
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <Avatar className="w-28 h-28 relative group">
+                <Avatar className="w-28 h-28 relative group bg-white border-4 border-black">
+                  {/* <Avatar className="w-28 h-28 relative group"> */}
                   <AvatarImage
                     src={filePreview ? filePreview : userData?.user.avatar}
                   />
@@ -128,6 +128,13 @@ const Profile = () => {
               </div>
             )}
           </Dropzone>
+        </div>
+        <div className="flex flex-col items-center justify-center mt-3">
+          <FaRegArrowAltCircleUp className="text-blue-500 text-3xl mb-2" />
+          <span className="text-gray-700 text-lg font-medium text-center">
+            Click on above circle to change your Profile Image even it do not
+            show
+          </span>
         </div>
         <div>
           <Form {...form}>
@@ -140,6 +147,7 @@ const Profile = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Name</FormLabel>
+
                       <FormControl>
                         <Input placeholder="Enter your Full Name" {...field} />
                       </FormControl>

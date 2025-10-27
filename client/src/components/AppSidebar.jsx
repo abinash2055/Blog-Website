@@ -41,7 +41,7 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <IoHomeOutline />
-                <Link to="">Home</Link>
+                <Link to="/">Home</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>

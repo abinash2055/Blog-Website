@@ -4,14 +4,14 @@ import BlogLike from "../models/bloglike.model.js";
 export const doLike = async (req, res, next) => {
   try {
     const { user, blogid } = req.body;
-    let like = await BlogLike.findOne({ user, blogid });
+
+    let like = await BlogLike.findOne({ userid: user, blogid });
 
     if (!like) {
-      const saveLike = new BlogLike({
-        user,
+      await BlogLike.create({
+        userid: user,
         blogid,
       });
-      like = await saveLike.save();
     } else {
       await BlogLike.findByIdAndDelete(like._id);
     }
@@ -22,6 +22,7 @@ export const doLike = async (req, res, next) => {
       likecount,
     });
   } catch (error) {
+    console.error("Error in doLike:", error);
     next(handleError(500, error.message));
   }
 };

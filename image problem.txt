@@ -2,15 +2,10 @@
 ........  Problem  ...............
 
 
+C. If google bata signupor login gare tes paxi,
+        profile bata avatar change garesi ok xa 
+            tara logout vayera login garda again    
+                google ko image aauxa changed wala aaudaina 
 
-A. Login garda Google bata, Google Image profile Avatar ma aayena.
 
-B. Profile ma ni Images aayena.
 
-C. Profile ma upload gara avatar ni aauxa.
-
-D. Email bata sign Up garda, User Icon ni aayena assets bata.
-
-E. Blog ma avatar ni aayena.
-
-F. Comment ma ni avatar aayena.
