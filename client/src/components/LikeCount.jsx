@@ -23,42 +23,12 @@ const LikeCount = ({ props }) => {
     }
   );
 
-  // console.log(BlogLikeCount);
-
   useEffect(() => {
     if (BlogLikeCount) {
       setLikeCount(BlogLikeCount.likecount);
       setHasLiked(BlogLikeCount.isUserliked);
     }
   }, [BlogLikeCount]);
-
-  // const handleLike = async () => {
-  //   try {
-  //     if (!user.isLoggedIn) {
-  //       return showToast("error", "Please login into your Account.");
-  //     }
-
-  //     const response = await fetch(
-  //       `${getEnv("VITE_API_BASE_URL")}/blog-like/do-like`,
-  //       {
-  //         method: "post",
-  //         credentials: "include",
-  //         headers: { "Content-type": "application/json" },
-  //         body: JSON.stringify({ user: user.user._id, blogid: props.blogid }),
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       showToast("error", response.statusText);
-  //     }
-
-  //     const responseData = await response.json();
-  //     setLikeCount(responseData.likecount);
-  //     setHasLiked(!hasLiked);
-  //   } catch (error) {
-  //     showToast("error", error.message);
-  //   }
-  // };
 
   const handleLike = async () => {
     try {
