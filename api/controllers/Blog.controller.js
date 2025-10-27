@@ -1,5 +1,6 @@
 import { handleError } from "../helpers/handleError.js";
 import Blog from "../models/blog.model.js";
+import Category from "../models/category.model.js";
 import cloudinary from "../config/cloudinary.js";
 import { encode } from "entities";
 
@@ -140,6 +141,32 @@ export const getBlog = async (req, res, next) => {
 
     res.status(200).json({
       blog,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const getRelatedBlog = async (req, res, next) => {
+  try {
+    const { category, blog } = req.params;
+    console.log(blog);
+    const categoryData = await Category.findOne({ slug: category });
+
+    if (!categoryData) {
+      return next(404, "Category not Found.");
+    }
+    const categoryId = categoryData._id;
+
+    const relatedBlog = await Blog.find({
+      category: categoryId,
+      slug: { $ne: blog },
+    })
+      .lean()
+      .exec();
+
+    res.status(200).json({
+      relatedBlog,
     });
   } catch (error) {
     next(handleError(500, error.message));

@@ -3,6 +3,7 @@ import CommentCount from "@/components/CommentCount";
 import CommentList from "@/components/CommentList";
 import LikeCount from "@/components/LikeCount";
 import Loading from "@/components/Loading";
+import RelatedBlog from "@/components/RelatedBlog";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getEnv } from "@/helpers/getEnv";
 import { useFetch } from "@/hooks/useFetch";
@@ -12,7 +13,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const SingleBlogDetails = () => {
-  const { blog } = useParams();
+  const { blog, category } = useParams();
 
   const { data, loading, error } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/blog/get-blog/${blog}`,
@@ -20,7 +21,8 @@ const SingleBlogDetails = () => {
       method: "get",
       credentials: "include",
       // body: JSON.stringify({ slug: blog }),
-    }
+    },
+    [blog, category]
   );
 
   if (loading) return <Loading />;
@@ -75,7 +77,9 @@ const SingleBlogDetails = () => {
           </div>
         </>
       )}
-      <div className="border rounded w-[30%]"></div>
+      <div className="border rounded w-[30%] p-5">
+        <RelatedBlog props={{ category: category, currentBlog: blog }} />
+      </div>
     </div>
   );
 };
