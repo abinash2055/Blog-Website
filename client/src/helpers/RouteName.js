@@ -46,6 +46,10 @@ export const RouteBlogByCategory = (category) => {
   }
 };
 
-export const RouteSearch = (query) => {
-  return `/blog/search=${query}`;
+export const RouteSearch = (q) => {
+  if (q) {
+    return `/search?q=${q}`;
+  } else {
+    return `/search`;
+  }
 };

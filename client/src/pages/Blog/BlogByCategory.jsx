@@ -23,8 +23,6 @@ const BlogByCategory = () => {
 
   if (loading) return <Loading />;
 
-  //   const categoryName = blogData?.categoryData?.name || "Unknown Category";
-
   return (
     <>
       <div className="flex items-center gap-3 text-2xl font-bold text-violet-500 border-b pb-3 mb-5">

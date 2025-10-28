@@ -6,6 +6,7 @@ import {
   getBlog,
   getBlogByCategory,
   getRelatedBlog,
+  search,
   showAllBlog,
   updateBlog,
 } from "../controllers/Blog.controller.js";
@@ -27,6 +28,8 @@ BlogRoute.get("/get-blog/:slug", getBlog);
 
 BlogRoute.get("/get-related-blog/:category/:blog", getRelatedBlog);
 
-BlogRoute.get("/get-blog-by-category/:category/", getBlogByCategory);
+BlogRoute.get("/get-blog-by-category/:category", getBlogByCategory);
+
+BlogRoute.get("/search", search);
 
 export default BlogRoute;
