@@ -53,3 +53,5 @@ export const RouteSearch = (q) => {
     return `/search`;
   }
 };
+
+export const RouteCommentDetails = "/comments";
