@@ -121,7 +121,7 @@ const AddBlog = () => {
     <div>
       <Card className="pt-5">
         <CardContent>
-          <h1 className="text-2xl font-bold mb-4">Edit Blog</h1>
+          <h1 className="text-2xl font-bold mb-4">Add Blog</h1>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               {/* For category  */}

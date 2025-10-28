@@ -17,13 +17,13 @@ const BlogCard = ({ props }) => {
             <div className="flex justify-between items-center gap-2">
               <Avatar>
                 <AvatarImage
-                  src={props.author.avatar || usericon}
+                  src={props?.author?.avatar || usericon}
                   alt="avatar"
                 />
               </Avatar>
-              <span>{props.author.name}</span>
+              <span>{props?.author?.name}</span>
             </div>
-            {props.author.role === "admin" && (
+            {props?.author?.role === "admin" && (
               <Badge variant="outline" className="bg-violet-500">
                 Admin
               </Badge>
@@ -33,7 +33,7 @@ const BlogCard = ({ props }) => {
           {/* For Featured Image  */}
           <div className="my-2">
             <img
-              src={props.featuredImage}
+              src={props?.featuredImage}
               alt="Feature Image"
               className="rounded"
             />

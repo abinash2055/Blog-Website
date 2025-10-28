@@ -29,7 +29,7 @@ const BlogByCategory = () => {
         <BiCategory />
         <h4>{blogData && blogData?.categoryData?.name}</h4>
       </div>
-      <div className="grid grid-cols-3 gap-10">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
         {blogData && blogData.blog.length > 0 ? (
           blogData.blog.map((blog) => <BlogCard key={blog._id} props={blog} />)
         ) : (

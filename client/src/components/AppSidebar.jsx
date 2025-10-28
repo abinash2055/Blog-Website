@@ -22,12 +22,16 @@ import {
   RouteBlogByCategory,
   RouteCategoryDetails,
   RouteCommentDetails,
+  RouteIndex,
   RouteUser,
 } from "@/helpers/RouteName";
 import { useFetch } from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
+import { useSelector } from "react-redux";
 
 const AppSidebar = () => {
+  const user = useSelector((state) => state.user);
+
   const { data: categoryData } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/category/all-category`,
     {
@@ -47,33 +51,48 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <IoHomeOutline />
-                <Link to="/">Home</Link>
+                <Link to={RouteIndex}>Home</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <BiCategoryAlt />
-                <Link to={RouteCategoryDetails}>Categories</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <GrBlog />
-                <Link to={RouteBlog}>Blogs</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <FaRegComments />
-                <Link to={RouteCommentDetails}>Comments</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <LuUsers />
-                <Link to={RouteUser}>Users</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+
+            {user && user.isLoggedIn ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <GrBlog />
+                    <Link to={RouteBlog}>Blogs</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FaRegComments />
+                    <Link to={RouteCommentDetails}>Comments</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
+            {user && user.isLoggedIn && user.user.role === "admin" ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <BiCategoryAlt />
+                    <Link to={RouteCategoryDetails}>Categories</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <LuUsers />
+                    <Link to={RouteUser}>Users</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
           </SidebarMenu>
         </SidebarGroup>
 
