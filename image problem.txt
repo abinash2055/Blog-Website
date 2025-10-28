@@ -2,10 +2,17 @@
 ........  Problem  ...............
 
 
-C. If google bata signupor login gare tes paxi,
+A.. If google bata signup or login gare tes paxi,
         profile bata avatar change garesi ok xa 
             tara logout vayera login garda again    
                 google ko image aauxa changed wala aaudaina 
 
 
 
+B.  Add Blog Page ko Blog Content size ra 
+        tesko functionality kaam garema
+
+
+
+C.  Edit Blog Page ko Blog Content size ra 
+        tesko functionality kaam garema

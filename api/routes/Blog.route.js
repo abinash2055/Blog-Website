@@ -4,6 +4,7 @@ import {
   deleteBlog,
   editBlog,
   getBlog,
+  getBlogByCategory,
   getRelatedBlog,
   showAllBlog,
   updateBlog,
@@ -25,5 +26,7 @@ BlogRoute.get("/get-all", showAllBlog);
 BlogRoute.get("/get-blog/:slug", getBlog);
 
 BlogRoute.get("/get-related-blog/:category/:blog", getRelatedBlog);
+
+BlogRoute.get("/get-blog-by-category/:category/", getBlogByCategory);
 
 export default BlogRoute;
