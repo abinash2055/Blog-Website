@@ -22,6 +22,7 @@ import {
   RouteBlogByCategory,
   RouteCategoryDetails,
   RouteCommentDetails,
+  RouteUser,
 } from "@/helpers/RouteName";
 import { useFetch } from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
@@ -70,7 +71,7 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <LuUsers />
-                <Link to="">Users</Link>
+                <Link to={RouteUser}>Users</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

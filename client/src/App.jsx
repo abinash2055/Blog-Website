@@ -17,6 +17,7 @@ import {
   RouteBlogByCategory,
   RouteSearch,
   RouteCommentDetails,
+  RouteUser,
 } from "./helpers/RouteName";
 import Index from "./pages/Index";
 import SignIn from "./pages/Signin";
@@ -32,6 +33,7 @@ import SingleBlogDetails from "./pages/SingleBlogDetails";
 import BlogByCategory from "./pages/Blog/BlogByCAtegory";
 import SearchResult from "./pages/SearchResult";
 import Comments from "./pages/Comments";
+import User from "./pages/Users";
 
 const App = () => {
   return (
@@ -57,6 +59,8 @@ const App = () => {
 
           <Route path={RouteSearch()} element={<SearchResult />} />
           <Route path={RouteCommentDetails} element={<Comments />} />
+
+          <Route path={RouteUser} element={<User />} />
         </Route>
 
         <Route path={RouteSignIn} element={<SignIn />} />
