@@ -43,7 +43,7 @@ const BlogDetails = () => {
 
     if (response) {
       setRefreshData((prev) => !prev);
-      showToast("success", "Category deleted successfully.");
+      showToast("success", "Blog deleted successfully.");
     } else {
       console.error("Delete error:", error);
       showToast("error", "Something went wrong while deleting.");
@@ -51,63 +51,88 @@ const BlogDetails = () => {
   };
 
   if (loading) return <Loading />;
-  if (error) return <p>Error loading categories.</p>;
+  if (error) return <p>Error loading blogs.</p>;
+
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <div>
-            <Button asChild>
-              <Link to={RouteBlogAdd}>Add Blog</Link>
-            </Button>
-          </div>
+    <div className="p-4 md:p-6">
+      <Card className="shadow-lg rounded-lg overflow-hidden">
+        <CardHeader className="bg-violet-50 px-4 py-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+          <h2 className="text-xl font-bold text-gray-800">Blog Details</h2>
+          <Button
+            asChild
+            className="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-lg transition-all duration-200"
+          >
+            <Link to={RouteBlogAdd}>Add Blog</Link>
+          </Button>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
+
+        <CardContent className="overflow-x-auto px-4 py-5 bg-gray-50">
+          <Table className="min-w-full divide-y divide-gray-200 rounded-lg border border-gray-200">
+            <TableHeader className="bg-gray-100">
               <TableRow>
-                <TableHead>Author</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Slug</TableHead>
-                <TableHead>Dated</TableHead>
-                <TableHead>Action</TableHead>
+                {["Author", "Category", "Title", "Slug", "Dated", "Action"].map(
+                  (header) => (
+                    <TableHead
+                      key={header}
+                      className="text-left px-4 py-3 text-gray-800 uppercase tracking-wide text-sm"
+                    >
+                      {header}
+                    </TableHead>
+                  )
+                )}
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {blogData && blogData.blog.length > 0 ? (
+
+            <TableBody className="bg-white divide-y divide-gray-200">
+              {blogData?.blog?.length > 0 ? (
                 blogData.blog.map((blog) => (
-                  <TableRow key={blog._id}>
-                    <TableCell>{blog?.author?.name}</TableCell>
-                    <TableCell>{blog?.category?.name}</TableCell>
-                    <TableCell>{blog?.title}</TableCell>
-                    <TableCell>{blog?.slug}</TableCell>
-                    <TableCell>
+                  <TableRow
+                    key={blog._id}
+                    className="hover:bg-gray-50 transition-colors duration-300"
+                  >
+                    <TableCell className="px-4 py-2 text-gray-700 font-medium">
+                      {blog?.author?.name}
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-gray-600">
+                      {blog?.category?.name}
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-gray-800 font-semibold">
+                      {blog?.title}
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-gray-500 truncate max-w-xs">
+                      {blog?.slug}
+                    </TableCell>
+                    <TableCell className="px-4 py-2 text-gray-500">
                       {moment(blog?.createdAt).format("DD-MM-YYYY")}
                     </TableCell>
-                    <TableCell className="flex gap-3">
+                    <TableCell className="px-4 py-2 flex flex-col sm:flex-row gap-2 sm:gap-2">
                       <Button
                         variant="outline"
-                        className="hover:bg-violet-500 hover:text-white"
+                        className="hover:bg-violet-500 hover:text-white p-2 rounded-lg transition-all duration-200 flex-1 sm:flex-none"
                         asChild
                       >
                         <Link to={RouteBlogEdit(blog._id)}>
-                          <FiEdit />
+                          <FiEdit className="text-lg" />
                         </Link>
                       </Button>
                       <Button
                         onClick={() => handleDelete(blog._id)}
                         variant="outline"
-                        className="hover:bg-violet-500 hover:text-white"
+                        className="hover:bg-red-500 hover:text-white p-2 rounded-lg transition-all duration-200 flex-1 sm:flex-none"
                       >
-                        <FaRegTrashAlt />
+                        <FaRegTrashAlt className="text-lg" />
                       </Button>
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan="3">No Blog found.</TableCell>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-6 text-gray-500 font-medium"
+                  >
+                    No Blog found.
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>

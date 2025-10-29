@@ -53,9 +53,8 @@ const AddCategory = () => {
         }
       );
       const data = await response.json();
-      if (!response.ok) {
-        return showToast("error", data.message);
-      }
+      if (!response.ok) return showToast("error", data.message);
+
       form.reset();
       showToast("success", data.message);
     } catch (error) {
@@ -64,46 +63,56 @@ const AddCategory = () => {
   }
 
   return (
-    <div>
-      <Card className="pt-5 max-w-screen-md mx-auto">
+    <div className="p-4 md:p-6 lg:p-8">
+      <Card className="pt-5 max-w-2xl mx-auto">
         <CardContent>
+          <h1 className="text-2xl font-bold mb-6 text-gray-800">
+            Add Category
+          </h1>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              {/* For name  */}
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your full name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {/* For slug  */}
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Slug</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Slug" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+            <form
+              className="space-y-6 flex flex-col"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
+              {/* Name */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter category name"
+                        {...field}
+                        className="w-full"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              {/* Button  */}
-              <Button type="submit" className="w-full">
+              {/* Slug */}
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Slug</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Slug" {...field} className="w-full" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                className="w-full md:w-auto bg-violet-500 hover:bg-violet-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
+              >
                 Submit
               </Button>
             </form>

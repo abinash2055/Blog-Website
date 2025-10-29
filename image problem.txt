@@ -2,17 +2,22 @@
 ........  Problem  ...............
 
 
-A.. If google bata signup or login gare tes paxi,
-        profile bata avatar change garesi ok xa 
-            tara logout vayera login garda again    
-                google ko image aauxa changed wala aaudaina 
+A.. If google bata signup or login gare tes paxi profile bata avatar change garesi ok xa tara logout vayera login garda again  google ko image aauxa changed wala aaudaina 
 
+B. Like unlike ko functionality not working in number properly in blog
 
+C. Comment add garda like ko side ma comment number increase vairako xaina
 
-B.  Add Blog Page ko Blog Content size ra 
-        tesko functionality kaam garema
+D. search test without refresh ma kaam garena
 
+E.  Profile page ma data rendered vayena mangoDB bata
 
+F. Admin le sab blog herna paune tara aafno create garek matra dekhi rako xa
 
-C.  Edit Blog Page ko Blog Content size ra 
-        tesko functionality kaam garema
+G. Category edit garda MongoDB bata data render vayena
+
+H. Category Update vayena edit garda
+
+I. Category Delete Vayena
+
+J. New Category add vairako xaina

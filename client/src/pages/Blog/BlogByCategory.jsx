@@ -24,19 +24,34 @@ const BlogByCategory = () => {
   if (loading) return <Loading />;
 
   return (
-    <>
-      <div className="flex items-center gap-3 text-2xl font-bold text-violet-500 border-b pb-3 mb-5">
-        <BiCategory />
-        <h4>{blogData && blogData?.categoryData?.name}</h4>
+    <div className="px-4 md:px-8 lg:px-16 py-6">
+      {/* Category Header */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-8 border-b pb-4">
+        <div className="flex items-center gap-3 text-2xl font-bold text-violet-600">
+          <BiCategory className="text-3xl" />
+          <h2 className="text-xl md:text-2xl">
+            {blogData?.categoryData?.name || "Category"}
+          </h2>
+        </div>
+        <p className="text-gray-600 mt-2 sm:mt-0">
+          {blogData?.blog?.length} blog{blogData?.blog?.length !== 1 && "s"}{" "}
+          found
+        </p>
       </div>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
-        {blogData && blogData.blog.length > 0 ? (
-          blogData.blog.map((blog) => <BlogCard key={blog._id} props={blog} />)
-        ) : (
-          <div>Data Not Found.</div>
-        )}
-      </div>
-    </>
+
+      {/* Blog Grid */}
+      {blogData?.blog?.length > 0 ? (
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {blogData.blog.map((blog) => (
+            <BlogCard key={blog._id} props={blog} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center text-gray-500 text-lg py-10">
+          No blogs found in this category.
+        </div>
+      )}
+    </div>
   );
 };
 
