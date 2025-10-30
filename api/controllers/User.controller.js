@@ -27,27 +27,24 @@ export const updateUser = async (req, res, next) => {
     const { userid } = req.params;
 
     const user = await User.findById(userid);
+    if (!user) return next(handleError(404, "User not found"));
+
     user.name = data.name;
     user.email = data.email;
     user.bio = data.bio;
 
-    if (data.password && data.password >= 8) {
-      const hashedPassword = bcryptjs.hashSync(data.password);
-      user.password = hashedPassword;
+    if (data.password && data.password.length >= 8) {
+      user.password = bcryptjs.hashSync(data.password);
     }
 
     if (req.file) {
-      // Upload an image
-      const uploadResult = await cloudinary.uploader
-        .upload(req.file.path, {
-          folder: "blog-personal-signature",
-          resource_type: "auto",
-        })
-        .catch((error) => {
-          next(handleError(500, error.message));
-        });
+      const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+        folder: "blog-personal-signature",
+        resource_type: "auto",
+      });
 
       user.avatar = uploadResult.secure_url;
+      user.isCustomAvatar = true; // mark as custom avatar
     }
 
     await user.save();
@@ -57,11 +54,11 @@ export const updateUser = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "data updated.",
+      message: "Profile updated successfully",
       user: newUser,
     });
-  } catch (error) {
-    next(handleError(500, error.message));
+  } catch (err) {
+    next(handleError(500, err.message));
   }
 };
 

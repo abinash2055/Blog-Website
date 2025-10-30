@@ -207,6 +207,7 @@ export const getBlogByCategory = async (req, res, next) => {
     next(handleError(500, error.message));
   }
 };
+
 export const search = async (req, res, next) => {
   try {
     const { q } = req.query;

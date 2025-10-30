@@ -2,27 +2,24 @@
 ........  Problem  ...............
 
 
-A.. If google bata signup or login gare tes paxi profile bata avatar change garesi ok xa tara logout vayera login garda again  google ko image aauxa changed wala aaudaina 
+A.. If google bata signup or login gare tes paxi profile bata avatar change garesi ok xa  
+    tara logout vayera login garda again  google ko image aauxa changed wala aaudaina 
 
 B. Like unlike ko functionality not working in number properly in blog
 
 C. Comment add garda like ko side ma comment number increase vairako xaina
 
-D. search test without refresh ma kaam garena
+D. Admin le sab blog herna paune tara aafno create gareko matra dekhi rako xa
 
-E.  Profile page ma data rendered vayena mangoDB bata
+E. Category edit garda MongoDB bata data render vayena
 
-F. Admin le sab blog herna paune tara aafno create gareko matra dekhi rako xa
+F. Category Update vayena edit garda
 
-G. Category edit garda MongoDB bata data render vayena
+G. Category Delete Vayena
 
-H. Category Update vayena edit garda
+H. New Category add vairako xaina
 
-I. Category Delete Vayena
 
-J. New Category add vairako xaina
-
-K. Logo responsive xaina.. ----->> Solved
 
 
 A.
@@ -33,6 +30,3 @@ E.
 F.
 G.
 H.
-I.
-J.
-K.  Solved.

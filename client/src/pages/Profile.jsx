@@ -26,29 +26,32 @@ import { setUser } from "@/redux/user/user.slice";
 import { FaRegArrowAltCircleUp } from "react-icons/fa";
 
 const Profile = () => {
-  const [filePreview, setFilePreview] = useState();
-  const [file, setFile] = useState();
+  const [filePreview, setFilePreview] = useState(null);
+  const [file, setFile] = useState(null);
 
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.user);
+  const userId = user?.user?._id;
 
+  // Fetch user data only when userId is available
   const {
     data: userData,
     loading,
     error,
   } = useFetch(
-    `${getEnv("VITE_API_BASE_URL")}/user/get-user/${user.user._id}`,
+    userId ? `${getEnv("VITE_API_BASE_URL")}/user/get-user/${userId}` : null,
     {
       method: "get",
       credentials: "include",
-    }[user?.user?._id]
+    }
   );
 
+  // Form validation schema
   const formSchema = z.object({
-    name: z.string().min(3, "Name must be at least 3 character long."),
+    name: z.string().min(3, "Name must be at least 3 characters long."),
     email: z.string().email(),
-    bio: z.string().min(3, "Bio must be at least 3 character long."),
+    bio: z.string().min(3, "Bio must be at least 3 characters long."),
+    password: z.string().optional(),
   });
 
   const form = useForm({
@@ -61,31 +64,35 @@ const Profile = () => {
     },
   });
 
+  // Reset form when user data is fetched
   useEffect(() => {
     if (userData && userData.success) {
       form.reset({
         name: userData.user.name,
         email: userData.user.email,
         bio: userData.user.bio,
+        password: "",
       });
+      setFilePreview(userData.user.avatar || null);
     }
   }, [userData]);
 
-  const handlFileSelection = (files) => {
+  // Handle file selection
+  const handleFileSelection = (files) => {
     const file = files[0];
-    const preview = URL.createObjectURL(file);
     setFile(file);
-    setFilePreview(preview);
+    setFilePreview(URL.createObjectURL(file));
   };
 
-  async function onSubmit(values) {
+  // Form submission
+  const onSubmit = async (values) => {
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      if (file) formData.append("file", file);
       formData.append("data", JSON.stringify(values));
 
       const response = await fetch(
-        `${getEnv("VITE_API_BASE_URL")}/user/update-user/${userData.user._id}`,
+        `${getEnv("VITE_API_BASE_URL")}/user/update-user/${userId}`,
         {
           method: "put",
           credentials: "include",
@@ -97,30 +104,27 @@ const Profile = () => {
       if (!response.ok) {
         return showToast("error", data.message);
       }
+
       dispatch(setUser(data.user));
       showToast("success", data.message);
-    } catch (error) {
-      showToast("error", error.message);
+    } catch (err) {
+      showToast("error", err.message);
     }
-  }
+  };
 
   if (loading) return <Loading />;
 
   return (
     <Card className="max-w-screen-md mx-auto">
       <CardContent>
-        <div className="flex justify-center items-center mt-10 ">
-          <Dropzone
-            onDrop={(acceptedFiles) => handlFileSelection(acceptedFiles)}
-          >
+        {/* Avatar Upload */}
+        <div className="flex justify-center items-center mt-10">
+          <Dropzone onDrop={handleFileSelection}>
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <Avatar className="w-28 h-28 relative group bg-white border-4 border-black">
-                  {/* <Avatar className="w-28 h-28 relative group"> */}
-                  <AvatarImage
-                    src={filePreview ? filePreview : userData?.user.avatar}
-                  />
+                  <AvatarImage src={filePreview || "/default-avatar.png"} />
                   <div className="absolute z-50 w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 justify-center items-center bg-black bg-opacity-20 border-2 border-violet-500 rounded-full group-hover:flex hidden cursor-pointer">
                     <IoCameraOutline color="#7c3aed" />
                   </div>
@@ -129,95 +133,87 @@ const Profile = () => {
             )}
           </Dropzone>
         </div>
+
         <div className="flex flex-col items-center justify-center mt-3">
           <FaRegArrowAltCircleUp className="text-blue-500 text-3xl mb-2" />
           <span className="text-gray-700 text-lg font-medium text-center">
-            Click on above circle to change your Profile Image even it do not
-            show
+            Click on the circle above to change your profile image
           </span>
         </div>
-        <div>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              {/* For Name  */}
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
 
-                      <FormControl>
-                        <Input placeholder="Enter your Full Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {/* For email  */}
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your email address"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {/* For Bio  */}
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="bio"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Bio</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Enter your Bio" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {/* For password  */}
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Enter your password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {/* Button  */}
-              <Button type="submit" className="w-full">
-                Save Changes
-              </Button>
-            </form>
-          </Form>
-        </div>
+        {/* Form */}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            {/* Name */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="mb-3">
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your full name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="mb-3">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Bio */}
+            <FormField
+              control={form.control}
+              name="bio"
+              render={({ field }) => (
+                <FormItem className="mb-3">
+                  <FormLabel>Bio</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Enter your bio" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Password */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="mb-3">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Enter new password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Submit Button */}
+            <Button type="submit" className="w-full">
+              Save Changes
+            </Button>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );

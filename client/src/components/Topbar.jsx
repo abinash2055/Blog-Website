@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "@/assets/images/logo-white.png";
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import usericon from ".././assets/images/user.png";
 import { FaRegUser, FaPlus } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
-import { removeUser } from "@/redux/user/user.slice";
+import { removeUser, setUser } from "@/redux/user/user.slice";
 import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
 import { IoMdSearch } from "react-icons/io";
@@ -35,13 +35,28 @@ const Topbar = () => {
   const navigate = useNavigate();
   const [showSearch, setShowSearch] = useState(false);
   const { toggleSidebar } = useSidebar();
-  const user = useSelector((state) => state.user);
+  const userState = useSelector((state) => state.user);
+
+  const toggleSearch = () => setShowSearch(!showSearch);
+
+  // Load user from localStorage on first mount if not in Redux
+  useEffect(() => {
+    if (!userState.isLoggedIn) {
+      const savedUser = JSON.parse(localStorage.getItem("user"));
+      if (savedUser) {
+        dispatch(setUser(savedUser));
+      }
+    }
+  }, [dispatch, userState.isLoggedIn]);
 
   const handleLogout = async () => {
     try {
       const response = await fetch(
         `${getEnv("VITE_API_BASE_URL")}/auth/logout`,
-        { method: "get", credentials: "include" }
+        {
+          method: "get",
+          credentials: "include",
+        }
       );
       const data = await response.json();
       if (!response.ok) return showToast("error", data.message);
@@ -54,7 +69,8 @@ const Topbar = () => {
     }
   };
 
-  const toggleSearch = () => setShowSearch(!showSearch);
+  const user = userState.user;
+  const isLoggedIn = userState.isLoggedIn;
 
   return (
     <div className="flex justify-between items-center h-16 fixed w-full z-20 bg-gray-900 px-5 border-b border-gray-700 shadow-lg">
@@ -101,7 +117,7 @@ const Topbar = () => {
         </button>
 
         {/* Sign In / User Dropdown */}
-        {!user.isLoggedIn ? (
+        {!isLoggedIn || !user ? (
           <Button
             asChild
             className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white px-4 py-2 flex items-center gap-2 shadow-lg transition transform hover:scale-105"
@@ -115,18 +131,18 @@ const Topbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger className="cursor-pointer">
               <Avatar className="border-2 border-purple-500 hover:scale-105 transition-transform shadow-lg">
-                <AvatarImage src={user.user?.avatar || usericon} />
+                <AvatarImage
+                  src={user.avatar || user.googleAvatar || usericon}
+                />
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
 
-            {/* Light-themed dropdown menu */}
+            {/* Dropdown Menu */}
             <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2">
               <DropdownMenuLabel className="flex flex-col gap-1 text-gray-900">
-                <p className="font-semibold">{user.user.name}</p>
-                <p className="text-xs text-gray-500 truncate">
-                  {user.user.email}
-                </p>
+                <p className="font-semibold">{user.name}</p>
+                <p className="text-xs text-gray-500 truncate">{user.email}</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="border-gray-200" />
 
