@@ -36,7 +36,7 @@ export const likeCount = async (req, res, next) => {
     if (userid) {
       const getuserlike = await BlogLike.countDocuments({
         blogid,
-        user: userid,
+        userid,
       });
       if (getuserlike > 0) {
         isUserliked = true;

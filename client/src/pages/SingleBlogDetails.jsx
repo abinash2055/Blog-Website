@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 
 const SingleBlogDetails = () => {
   const { blog, category } = useParams();
-  const [newComment, setNewComment] = useState(null); // 🔥 shared comment state
+  const [newComment, setNewComment] = useState(null);
 
   const { data, loading } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/blog/get-blog/${blog}`,
@@ -47,7 +47,7 @@ const SingleBlogDetails = () => {
 
               <div className="flex items-center gap-5">
                 <LikeCount props={{ blogid: data.blog._id }} />
-                {/* 🔥 Pass newComment to trigger re-fetch */}
+
                 <CommentCount props={{ blogid: data.blog._id, newComment }} />
               </div>
             </div>
