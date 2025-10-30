@@ -1,7 +1,6 @@
 
 ........  Problem  ...............
 
-
 A.  If google bata signup or login gare tes-paxi 
     profile bata avatar change garesi ok xa tara 
     logout vayera login garda again google ko 
@@ -10,21 +9,16 @@ A.  If google bata signup or login gare tes-paxi
 B.  Like unlike ko functionality not working in 
     number properly in blog.
 
-C.  Comment add garda like ko side ma comment 
-    number increase vairako xaina.
-
-D.  Admin le sab blog herna paune tara aafno 
+C.  Admin le sab blog herna paune tara aafno 
     create gareko matra dekhi rako xa.
 
-E.  Category edit garda MongoDB bata data render vayena.
+D.  Category edit garda MongoDB bata data render vayena.
 
-F.  Category Update vayena edit garera submit garda.
+E.  Category Update vayena edit garera submit garda.
 
-G.  Category Delete vayena.
+F.  Category Delete vayena.
 
-H.  New Category add vayena.
-
-
+G.  Category new add vayena.
 
 
 A.
@@ -34,4 +28,3 @@ D.
 E.
 F.
 G.
-H.

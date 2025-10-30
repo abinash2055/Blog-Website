@@ -9,7 +9,8 @@ const CommentCount = ({ props }) => {
     {
       method: "get",
       credentials: "include",
-    }
+    },
+    [props.newComment]
   );
 
   return (
