@@ -46,7 +46,7 @@ const AppSidebar = () => {
   return (
     <Sidebar className="bg-gray-900 text-white border-r border-gray-800 shadow-lg">
       {/* Logo */}
-      <SidebarHeader className="bg-gray-900 flex justify-center items-center py-4">
+      <SidebarHeader className="fixed inset-y-0 left-0 z-30 w-64 transform -translate-x-full md:translate-x-0 md:static md:shadow-none transition-transform duration-300 bg-gray-900 text-white border-r border-gray-800 shadow-lg">
         <img src={logo} alt="logo" width={120} className="drop-shadow-lg" />
       </SidebarHeader>
 

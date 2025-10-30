@@ -49,9 +49,11 @@ const AddCategory = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(values),
         }
       );
+
       const data = await response.json();
       if (!response.ok) return showToast("error", data.message);
 

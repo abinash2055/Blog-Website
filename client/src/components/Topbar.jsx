@@ -58,8 +58,8 @@ const Topbar = () => {
 
   return (
     <div className="flex justify-between items-center h-16 fixed w-full z-20 bg-gray-900 px-5 border-b border-gray-700 shadow-lg">
-      {/* Logo Section (unchanged) */}
-      <div className="flex justify-center items-center gap-2">
+      {/* Logo Section */}
+      <div className="flex justify-start items-center gap-2 w-full md:w-auto">
         <button
           onClick={toggleSidebar}
           type="button"
@@ -67,8 +67,12 @@ const Topbar = () => {
         >
           <AiOutlineMenu size={22} className="text-white" />
         </button>
-        <Link to={RouteIndex}>
-          <img src={logo} alt="logo" className="md:w-auto w-48" />
+        <Link to={RouteIndex} className="flex-shrink-0">
+          <img
+            src={logo}
+            alt="logo"
+            className="h-8 md:h-10 w-auto max-w-full object-contain"
+          />
         </Link>
       </div>
 

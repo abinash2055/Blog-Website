@@ -50,7 +50,7 @@ export const updateCategory = async (req, res, next) => {
       { new: true }
     );
 
-    await category.save();
+    // await category.save();
 
     res.status(200).json({
       success: true,
