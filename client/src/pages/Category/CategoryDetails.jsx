@@ -16,7 +16,6 @@ import { getEnv } from "@/helpers/getEnv";
 import Loading from "@/components/Loading";
 import { FiEdit } from "react-icons/fi";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { deleteData } from "@/helpers/handleDelete";
 import { showToast } from "@/helpers/showToast";
 
 const CategoryDetails = () => {
