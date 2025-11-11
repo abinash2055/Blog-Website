@@ -6,17 +6,17 @@ import {
   showCategory,
   updateCategory,
 } from "../controllers/Category.controller.js";
-import { onlyadmin } from "../middleware/onlyadmin.js";
+import { authenticate, onlyAdmin } from "../middleware/authenticate.js";
 
 const CategoryRoute = express.Router();
 
-CategoryRoute.post("/add", onlyadmin, addCategory);
+CategoryRoute.post("/add",authenticate,onlyAdmin, addCategory);
 
-CategoryRoute.put("/update/:categoryid", onlyadmin, updateCategory);
+CategoryRoute.put("/update/:categoryid",authenticate, onlyAdmin, updateCategory);
 
-CategoryRoute.get("/show/:categoryid", onlyadmin, showCategory);
+CategoryRoute.get("/show/:categoryid", authenticate,onlyAdmin, showCategory);
 
-CategoryRoute.delete("/delete/:categoryid", onlyadmin, deleteCategory);
+CategoryRoute.delete("/delete/:categoryid",authenticate, onlyAdmin, deleteCategory);
 
 CategoryRoute.get("/all-category", getAllCategory);
 
