@@ -101,7 +101,7 @@ const CategoryDetails = () => {
                     key={category._id}
                     className="hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <TableCell className="px-4 py-2 text-gray-700 font-medium">
+                    <TableCell className="px-4 py-2 text-gray-700 font-bold">
                       {category.name}
                     </TableCell>
                     <TableCell className="px-4 py-2 text-gray-500">

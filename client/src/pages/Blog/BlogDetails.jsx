@@ -68,7 +68,7 @@ const BlogDetails = () => {
 
         <CardContent className="overflow-x-auto px-4 py-5 bg-gray-50">
           <Table className="min-w-full divide-y divide-gray-200 rounded-lg border border-gray-200">
-            <TableHeader className="bg-gray-100">
+            <TableHeader className="bg-gray-100 font-medium">
               <TableRow>
                 {["Author", "Category", "Title", "Slug", "Dated", "Action"].map(
                   (header) => (

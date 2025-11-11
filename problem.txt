@@ -1,22 +1,18 @@
 
 ........  Problem  ...............
 
-A.  If google bata signup or login gare tes-paxi 
-    profile bata avatar change garesi ok xa tara 
-    logout vayera login garda again google ko 
-    image aauxa changed wala aaudaina.
 
-B.  Admin le sab blog herna paune ho tara aafno 
+A.  Admin le sab blog herna paune ho tara aafno 
     create gareko matra dekhi rako xa.
+B.  Category edit garda MongoDB bata data render vayena.
+C.  Category Edit vayena.
+D.  Category Delete vayena.
+E.  Category new add vayena. 
 
-C.  Category edit garda MongoDB bata data render vayena.
-D.  Category Edit vayena.
-E.  Category Delete vayena.
-F.  Category new add vayena.
+
 
 A.
 B.
 C.
 D.
 E.
-F.
