@@ -7,9 +7,9 @@ import Loading from "@/components/Loading";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getEnv } from "@/helpers/getEnv";
 import { useFetch } from "@/hooks/useFetch";
-import { decode } from "entities";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 const SingleBlogDetails = () => {
   const { blog, category } = useParams();
@@ -62,11 +62,13 @@ const SingleBlogDetails = () => {
             </div>
 
             {/* Blog Content */}
-            <div
-              dangerouslySetInnerHTML={{
-                __html: decode(data.blog.blogContent) || "",
-              }}
-            ></div>
+
+            {/* Blog Content */}
+           
+            <div className="prose prose-lg max-w-none">
+              <ReactMarkdown>{data.blog.blogContent || ""}</ReactMarkdown>
+            </div>
+
 
             {/* Comments */}
             <div className="border-t mt-5 pt-5">
