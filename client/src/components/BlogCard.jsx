@@ -67,7 +67,7 @@ import { RouteBlogDetails } from "@/helpers/RouteName";
 
 const BlogCard = ({ props }) => {
   return (
-    <Link to={RouteBlogDetails(props.category.slug, props.slug)}>
+    <Link to={RouteBlogDetails(props?.category?.slug, props?.slug)}>
       <Card className="relative overflow-hidden rounded-2xl bg-white/90 backdrop-blur-md border border-gray-200 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
         <CardContent className="p-5 space-y-3 text-gray-900">
           {/* Author Info */}
