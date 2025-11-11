@@ -170,7 +170,7 @@ const Comments = () => {
                     key={comment._id}
                     className="hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <TableCell className="px-4 py-2 text-gray-700">
+                    <TableCell className="px-4 py-2 text-gray-700 font-bold">
                       {comment?.blogid?.title}
                     </TableCell>
                     <TableCell className="px-4 py-2 text-gray-700">

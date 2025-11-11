@@ -10,14 +10,9 @@ B.  Admin le sab blog herna paune ho tara aafno
     create gareko matra dekhi rako xa.
 
 C.  Category edit garda MongoDB bata data render vayena.
-
 D.  Category Edit vayena.
-
 E.  Category Delete vayena.
-
 F.  Category new add vayena.
-
-
 
 A.
 B.
