@@ -30,7 +30,7 @@ import AddBlog from "./pages/Blog/AddBlog";
 import BlogDetails from "./pages/Blog/BlogDetails";
 import EditBlog from "./pages/Blog/EditBlog";
 import SingleBlogDetails from "./pages/SingleBlogDetails";
-import BlogByCategory from "./pages/Blog/BlogByCAtegory";
+import BlogByCategory from "./pages/Blog/BlogByCategory";
 import SearchResult from "./pages/SearchResult";
 import Comments from "./pages/Comments";
 import User from "./pages/Users";
