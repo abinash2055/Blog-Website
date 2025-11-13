@@ -16,8 +16,12 @@ import { useForm } from "react-hook-form";
 import slugify from "slugify";
 import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
+import { useNavigate } from "react-router-dom";    // added
+import { RouteCategoryDetails } from "@/helpers/RouteName";   // added
 
 const AddCategory = () => {
+  const navigate = useNavigate();  // added
+
   const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters long"),
     slug: z.string().min(3, "Slug must be at least 3 characters long"),
@@ -59,6 +63,7 @@ const AddCategory = () => {
 
       form.reset();
       showToast("success", data.message);
+      navigate(RouteCategoryDetails); // added
     } catch (error) {
       showToast("error", error.message);
     }

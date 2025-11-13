@@ -16,11 +16,14 @@ import { useForm } from "react-hook-form";
 import slugify from "slugify";
 import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";   // useNavigate added
 import { useFetch } from "@/hooks/useFetch";
+import { RouteCategoryDetails } from "@/helpers/RouteName";   // added
 
 const EditCategory = () => {
   const { category_id } = useParams();
+  const navigate = useNavigate();       // added
+
 
   const {
     data: categoryData,
@@ -77,6 +80,7 @@ const EditCategory = () => {
       const data = await response.json();
       if (!response.ok) return showToast("error", data.message);
       showToast("success", data.message);
+      navigate(RouteCategoryDetails);    // added
     } catch (error) {
       showToast("error", error.message);
     }
