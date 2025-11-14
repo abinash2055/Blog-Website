@@ -16,16 +16,33 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-app.use(cookieParser());
-
-app.use(express.json());
-
+// CORS must be before other middleware
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL,"https://blog-website-trail.vercel.app/"],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        process.env.FRONTEND_URL,
+        "https://blog-website-trail.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:5174"
+      ];
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    exposedHeaders: ["Set-Cookie"],
+    optionsSuccessStatus: 200,
   })
 );
+
+app.use(cookieParser());
+app.use(express.json());
 
 // Route Setup
 app.use("/api/auth", AuthRoute);
