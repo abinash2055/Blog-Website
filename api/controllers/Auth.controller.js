@@ -9,7 +9,7 @@ export const Register = async (req, res, next) => {
     const checkuser = await User.findOne({ email });
     if (checkuser) {
       // user already exists
-      next(handleError(409, "User already registered."));
+      return next(handleError(409, "User already registered."));
     }
 
     const hashedPassword = bcryptjs.hashSync(password);
@@ -37,14 +37,14 @@ export const Login = async (req, res, next) => {
     const user = await User.findOne({ email });
     if (!user) {
       // user not found
-      next(handleError(404, "Invalid login credentials."));
+      return next(handleError(404, "Invalid login credentials."));
     }
     const hashedPassword = user.password;
 
-    const comparePassword = bcryptjs.compare(password, hashedPassword);
+    const comparePassword = await bcryptjs.compare(password, hashedPassword);
     if (!comparePassword) {
       // password does not match
-      next(handleError(404, "Invalid login credentials."));
+      return next(handleError(404, "Invalid login credentials."));
     }
 
     const token = jwt.sign(
@@ -53,7 +53,7 @@ export const Login = async (req, res, next) => {
         name: user.name,
         email: user.email,
         avatar: user.avatar,
-        role:user.role
+        role: user.role
       },
       process.env.JWT_SECRET
     );

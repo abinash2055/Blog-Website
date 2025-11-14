@@ -44,7 +44,32 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-// Route Setup
+// Mongoose configuration
+mongoose.set('strictQuery', false);
+
+// Connect to MongoDB first
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_CONN, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("✅ Database Connected Successfully");
+    
+    // Start server only after DB connection
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on port: ${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Database Connection Error:", err.message);
+    console.error("Full error:", err);
+    process.exit(1);
+  }
+};
+
+connectDB();
+
+// Route Setup - can be registered before connection
 app.use("/api/auth", AuthRoute);
 app.use("/api/user", UserRoute);
 app.use("/api/category", CategoryRoute);
@@ -52,18 +77,8 @@ app.use("/api/blog", BlogRoute);
 app.use("/api/comment", CommentRoute);
 app.use("/api/blog-like", BlogLikeRoute);
 
-mongoose
-  .connect(process.env.MONGODB_CONN, {
-    dbName: "mern-blog",
-  })
-  .then(() => console.log("Database Connected"))
-  .catch((err) => console.log("Database Connection Error:", err));
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
-});
-
-app.use((err, req, res, next) => {
+// Error handler middleware
+app.use((err, _req, res, _next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
   res.status(statusCode).json({
