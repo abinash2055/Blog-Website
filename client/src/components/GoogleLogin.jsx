@@ -16,9 +16,7 @@ const GoogleLogin = () => {
 
   const handleLogin = async () => {
     try {
-      console.log("i am in first step")
       const googleResponse = await signInWithPopup(auth, provider);
-      console.log("i reached 2nd step")
       const user = googleResponse.user;
       const bodyData = {
         name: user.displayName,
