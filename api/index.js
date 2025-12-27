@@ -16,18 +16,60 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-app.use(cookieParser());
-
-app.use(express.json());
-
+// CORS must be before other middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        process.env.FRONTEND_URL,
+        "https://blog-website-trail.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:5174"
+      ];
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    exposedHeaders: ["Set-Cookie"],
+    optionsSuccessStatus: 200,
   })
 );
 
-// Route Setup
+app.use(cookieParser());
+app.use(express.json());
+
+// Mongoose configuration
+mongoose.set('strictQuery', false);
+
+// Connect to MongoDB first
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_CONN, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("✅ Database Connected Successfully");
+    
+    // Start server only after DB connection
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on port: ${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Database Connection Error:", err.message);
+    console.error("Full error:", err);
+    process.exit(1);
+  }
+};
+
+connectDB();
+
+// Route Setup - can be registered before connection
 app.use("/api/auth", AuthRoute);
 app.use("/api/user", UserRoute);
 app.use("/api/category", CategoryRoute);
@@ -35,18 +77,8 @@ app.use("/api/blog", BlogRoute);
 app.use("/api/comment", CommentRoute);
 app.use("/api/blog-like", BlogLikeRoute);
 
-mongoose
-  .connect(process.env.MONGODB_CONN, {
-    dbName: "mern-blog",
-  })
-  .then(() => console.log("Database Connected"))
-  .catch((err) => console.log("Database Connection Error:", err));
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
-});
-
-app.use((err, req, res, next) => {
+// Error handler middleware
+app.use((err, _req, res, _next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
   res.status(statusCode).json({
