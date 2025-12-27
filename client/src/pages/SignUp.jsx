@@ -164,7 +164,7 @@ const SignUp = () => {
                 Sign Up
               </Button>
               <div className="mt-5 text-sm flex justify-center items-center gap-2">
-                <p>Already have anaccount?</p>
+                <p>Already have an account?</p>
                 <Link
                   className="text-blue-500 hover:underline"
                   to={RouteSignIn}
