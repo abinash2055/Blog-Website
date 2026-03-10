@@ -13,8 +13,6 @@ import BlogLikeRoute from "./routes/Bloglike.route.js";
 
 dotenv.config();
 
-// const PORT = process.env.PORT;
-
 const app = express();
 
 // CORS must be before other middleware
